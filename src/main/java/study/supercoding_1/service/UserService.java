@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import study.supercoding_1.dto.UserDto;
-import study.supercoding_1.entity.UserEntity;
+import study.supercoding_1.entity.User;
 import study.supercoding_1.repository.UserRepository;
 
 import java.util.Date;
@@ -34,13 +34,13 @@ public class UserService {
         }
 
         // DTO를 Entity로 초기화
-        UserEntity userEntity = new UserEntity();
-        userEntity.setEmail(email);
+        User user = new User();
+        user.setEmail(email);
         // 비밀번호 암호화 (직접 지정한 메소드)
-        userEntity.setPassword(bCryptPasswordEncoder.encode(password));
-        userEntity.setRole("ROLE_ADMIN");
-        userEntity.setCreate_at(new Date());
+        user.setPassword(bCryptPasswordEncoder.encode(password));
+        user.setRole("ROLE_ADMIN");
+        //user.setCreate_at();
 
-        userRepository.save(userEntity);
+        userRepository.save(user);
     }
 }

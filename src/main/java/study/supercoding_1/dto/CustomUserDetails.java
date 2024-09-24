@@ -2,18 +2,18 @@ package study.supercoding_1.dto;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import study.supercoding_1.entity.UserEntity;
+import study.supercoding_1.entity.User;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 public class CustomUserDetails  implements UserDetails {
 
-    private final UserEntity userEntity;
+    private final User user;
 
-    public CustomUserDetails(UserEntity userEntity) {
+    public CustomUserDetails(User user) {
 
-        this.userEntity = userEntity;
+        this.user = user;
     }
 
     @Override
@@ -26,7 +26,7 @@ public class CustomUserDetails  implements UserDetails {
             @Override
             public String getAuthority() {
 
-                return userEntity.getRole();
+                return user.getRole();
             }
         });
 
@@ -36,13 +36,13 @@ public class CustomUserDetails  implements UserDetails {
     @Override
     public String getPassword() {
 
-        return userEntity.getPassword();
+        return user.getPassword();
     }
 
     @Override
     public String getUsername() {
 
-        return userEntity.getEmail();
+        return user.getEmail();
     }
 
     @Override
