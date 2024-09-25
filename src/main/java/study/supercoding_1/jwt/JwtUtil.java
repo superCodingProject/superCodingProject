@@ -19,6 +19,9 @@ public class JwtUtil {
     // .yml 파일에 지정한 변수 가져오기
     public JwtUtil(@Value("${spring.jwt.secret}") String secret) {
 
+        if(secret == null || secret.isEmpty()){
+            throw new IllegalArgumentException("secret 값이 비어있어 key 를 생성 할 수 없습니다.");
+        }
         // 객체 타입으로 secretKey 만들기
         this.secretKey = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), Jwts.SIG.HS256.key().build().getAlgorithm());
     }
