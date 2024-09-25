@@ -53,7 +53,7 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests((auth) -> auth
                 // permitAll() -> 설정한 경로에 대해서는 모든 권한을 허용
-                .requestMatchers("/login","/","/api/**").permitAll()
+                .requestMatchers("/login","/","/**").permitAll()
                 // ADMIN 권한을 가진 사용자만 접근할 수 있음
                 .requestMatchers("/admin").hasRole("ADMIN")
                 // 로그인된 사용자만 접근 가능
