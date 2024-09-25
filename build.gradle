@@ -46,6 +46,10 @@ dependencies {
     implementation 'io.jsonwebtoken:jjwt-api:0.12.3' // API
     implementation 'io.jsonwebtoken:jjwt-impl:0.12.3' // 구현
     implementation 'io.jsonwebtoken:jjwt-jackson:0.12.3' // JSON 처리
+
+    //Test 롬복
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
 }
 
 tasks.named('test') {
