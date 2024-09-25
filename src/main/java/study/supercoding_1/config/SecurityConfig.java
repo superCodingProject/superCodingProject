@@ -53,7 +53,6 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests((auth) -> auth
                 // permitAll() -> 설정한 경로에 대해서는 모든 권한을 허용
-                // 여기다 설정해주면 되는거 아닌가요?? 실행해보겠습니다
                 .requestMatchers("/api/login","/","/api/signup","/api/logout").permitAll()
                 // ADMIN 권한을 가진 사용자만 접근할 수 있음
                 .requestMatchers("/admin").hasRole("ADMIN")

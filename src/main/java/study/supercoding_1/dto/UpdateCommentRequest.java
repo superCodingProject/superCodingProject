@@ -1,9 +1,10 @@
 package study.supercoding_1.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
-public class AddCommentDTO {
+@AllArgsConstructor
+public class UpdateCommentRequest {
     private String content;
-    private String author;
 }
