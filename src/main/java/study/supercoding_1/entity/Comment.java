@@ -3,6 +3,8 @@ package study.supercoding_1.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import study.supercoding_1.dto.GetCommentResponse;
+import study.supercoding_1.dto.UpdateCommentRequest;
+import study.supercoding_1.dto.UpdateCommentResponse;
 
 @Entity
 @Table(name = "comments")
@@ -23,6 +25,10 @@ public class Comment extends BaseTimeEntity{
         this.author = author;
         this.post = post;
     }
+    @Builder
+    public Comment(String content) {
+        this.content = content;
+    }
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -40,4 +46,10 @@ public class Comment extends BaseTimeEntity{
                 .postId((long) this.getPost().getId())
                 .createdAt(this.getCreatedAt()).build();
     }
+
+    public Comment updateContent( UpdateCommentRequest request){
+        this.content = request.getContent();
+        return this;
+    }
+
 }
