@@ -2,6 +2,7 @@ package study.supercoding_1.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import study.supercoding_1.dto.GetCommentResponse;
 
 @Entity
 @Table(name = "comments")
@@ -30,4 +31,13 @@ public class Comment extends BaseTimeEntity{
     @ManyToOne
     @JoinColumn(name = "post_id")
     private Posts post;
+
+    public GetCommentResponse entityToGetCommentResponse(){
+        return GetCommentResponse.builder()
+                .id(this.getId())
+                .content(this.getContent())
+                .author(this.getAuthor())
+                .postId((long) this.getPost().getId())
+                .createdAt(this.getCreatedAt()).build();
+    }
 }

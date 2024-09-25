@@ -4,12 +4,12 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import study.supercoding_1.dto.AddCommentDTO;
+import study.supercoding_1.dto.GetCommentResponse;
 import study.supercoding_1.service.CommentService;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/api")
@@ -24,5 +24,13 @@ public class CommentController {
         commentService.addComment(addCommentDTO);
         return ResponseEntity.ok("성공");
     }
+
+    @ResponseBody
+    @GetMapping("/comments")
+    @Operation(summary = "전체 댓글 조회",description = "전체 댓글을 조회합니다.")
+    public ResponseEntity<List<GetCommentResponse>> getCommentList(){
+        return ResponseEntity.ok(commentService.getCommentList());
+    }
+
 
 }
