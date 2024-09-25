@@ -5,8 +5,6 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class AddCommentDTO {
-    private String content;
-    private String author;
-    private String post_id;
+public class AddCommentResponse {
+    private String message;
 }
