@@ -1,5 +1,6 @@
 package study.supercoding_1.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import study.supercoding_1.dto.PostDto;
@@ -28,11 +29,11 @@ public class Post extends BaseTimeEntity {
 
     @ManyToOne(fetch = FetchType.LAZY) //  many 쪽이 다 관계
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
 
     public PostDto toDto() {
         return PostDto.builder()
-                .id(getId())
                 .title(getTitle()) // this 생략
                 .content(getContent())
                 .author(getAuthor())
