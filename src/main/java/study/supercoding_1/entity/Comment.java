@@ -5,7 +5,6 @@ import lombok.*;
 import study.supercoding_1.dto.AddCommentRequest;
 import study.supercoding_1.dto.GetCommentResponse;
 import study.supercoding_1.dto.UpdateCommentRequest;
-import study.supercoding_1.dto.UpdateCommentResponse;
 
 @Entity
 @Table(name = "comments")
