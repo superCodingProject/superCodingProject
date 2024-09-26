@@ -50,6 +50,9 @@ public class Post extends BaseTimeEntity {
     @OneToMany(mappedBy = "post" , cascade = CascadeType.ALL)
     private List<Comment> comments;
 
+    @OneToMany(mappedBy = "post" , cascade = CascadeType.ALL)
+    private List<Like> likes;
+
     public PostDto toDto() {
         return PostDto.builder()
                 .id(getId())
@@ -74,8 +77,8 @@ public class Post extends BaseTimeEntity {
     }
 
     // 좋아요 취소 메서드
-    public void decrementLikeCount(Integer likeCount) {
-        if (likeCount > 0) {
+    public void decrementLikeCount() {
+        if (this.likeCount > 0) {
             this.likeCount--;
         }
     }
