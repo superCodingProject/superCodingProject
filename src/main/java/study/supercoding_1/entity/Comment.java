@@ -2,6 +2,7 @@ package study.supercoding_1.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import study.supercoding_1.dto.AddCommentRequest;
 import study.supercoding_1.dto.GetCommentResponse;
 import study.supercoding_1.dto.UpdateCommentRequest;
 import study.supercoding_1.dto.UpdateCommentResponse;
@@ -47,7 +48,15 @@ public class Comment extends BaseTimeEntity{
                 .createdAt(this.getCreatedAt()).build();
     }
 
-    public Comment updateContent( UpdateCommentRequest request){
+    public static Comment createComment(AddCommentRequest request, Posts post){
+        return Comment.builder()
+                .content(request.getContent())
+                .author(request.getAuthor())
+                .post(post)
+                .build();
+    }
+
+    public Comment updateContent(UpdateCommentRequest request){
         this.content = request.getContent();
         return this;
     }

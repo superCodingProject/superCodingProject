@@ -1,6 +1,7 @@
 package study.supercoding_1.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,9 +18,8 @@ public class CommentController {
 
     @PostMapping("/comments")
     @Operation(summary = "댓글 작성",description = "새로운 댓글을 작성합니다.")
-    public ResponseEntity<String> addComment(@RequestBody AddCommentRequest addCommentRequest){
-        commentService.addComment(addCommentRequest);
-        return ResponseEntity.ok("성공");
+    public ResponseEntity<AddCommentResponse> addComment(@RequestBody AddCommentRequest addCommentRequest){
+        return ResponseEntity.ok(commentService.addComment(addCommentRequest));
     }
 
 
