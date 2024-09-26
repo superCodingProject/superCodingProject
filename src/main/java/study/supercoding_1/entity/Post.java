@@ -39,6 +39,9 @@ public class Post extends BaseTimeEntity {
     @JsonIgnore
     private User user;
 
+    @Column(name = "like_count")
+    private Integer likeCount;
+
     @OneToMany(mappedBy = "post" , cascade = CascadeType.ALL)
     private List<Comment> comments;
 
@@ -60,7 +63,15 @@ public class Post extends BaseTimeEntity {
 //        this.author = author;
 //    }
 
+    // 좋아요 증가 메서드
+    public void incrementLikeCount() {
+        this.likeCount++;
+    }
 
-
-
+    // 좋아요 취소 메서드
+    public void decrementLikeCount(Integer likeCount) {
+        if (likeCount > 0) {
+            this.likeCount--;
+        }
+    }
 }
