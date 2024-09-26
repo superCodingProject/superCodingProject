@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @Table(name = "likes")
 @RequiredArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Like {
 
     @Id
