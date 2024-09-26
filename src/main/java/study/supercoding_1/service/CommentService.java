@@ -9,6 +9,9 @@ import study.supercoding_1.dto.GetCommentResponse;
 import study.supercoding_1.dto.UpdateCommentRequest;
 import study.supercoding_1.entity.Comment;
 import study.supercoding_1.entity.Post;
+import study.supercoding_1.exception.errorcode.CommonErrorCode;
+import study.supercoding_1.exception.exception.CommentException;
+import study.supercoding_1.exception.exception.ResourceNotFoundException;
 import study.supercoding_1.repository.CommentRepository;
 import study.supercoding_1.repository.PostRepository;
 
@@ -25,41 +28,53 @@ public class CommentService {
     public CommentResponse addComment(AddCommentRequest addCommentRequest){
 
         Post post = postRepository.findById(addCommentRequest.getPostId())
-                .orElseThrow(()->new RuntimeException("server error"));
+                .orElseThrow(()->new ResourceNotFoundException(CommonErrorCode.POST_NOT_FOUND));
 
         Comment savedComment = commentRepository.save(Comment.createComment(addCommentRequest,post));
+
         if (savedComment.getId() > 0){
             return CommentResponse.builder()
                     .message("댓글이 성공적으로 작성되었습니다.").build();
         }else {
-            throw new RuntimeException("댓글 작성에 실패했습니다.");
+            throw new CommentException(CommonErrorCode.COMMENT_SAVE_FAILURE);
         }
     }
 
     @Transactional
     public List<GetCommentResponse> getCommentList(){
         List<Comment> commentList = commentRepository.findAll();
-        return commentList.stream().map(c->c.entityToGetCommentResponse()).toList();
+        return commentList.stream().map(Comment::entityToGetCommentResponse).toList();
     }
 
     @Transactional
     public CommentResponse updateComment(Long commentId, UpdateCommentRequest request){
         Comment comment = commentRepository.findById(commentId)
-                .orElseThrow(()->new RuntimeException("없는 comment 입니다"));
+                .orElseThrow(()->new ResourceNotFoundException(CommonErrorCode.COMMENT_NOT_FOUND));
 
-        commentRepository.save(comment.updateContent(request));
+        Comment savedComment = commentRepository.save(comment.updateContent(request));
 
-        return CommentResponse.builder()
-                .message("댓글이 성공적으로 수정되었습니다.").build();
+        if (savedComment.getId() > 0){
+            return CommentResponse.builder()
+                    .message("댓글이 성공적으로 수정되었습니다.").build();
+        }else {
+            throw new CommentException(CommonErrorCode.COMMENT_UPDATE_FAILURE);
+        }
+
     }
 
     @Transactional
     public CommentResponse deleteComment(Long commentId){
         Comment comment = commentRepository.findById(commentId)
-                .orElseThrow(()->new RuntimeException("없는 comment 입니다"));
+                .orElseThrow(()->new ResourceNotFoundException(CommonErrorCode.COMMENT_NOT_FOUND));
 
         commentRepository.delete(comment);
-        return CommentResponse.builder()
-                .message("댓글이 성공적으로 삭제되었습니다.").build();
+
+        if (commentRepository.findById(commentId).isEmpty()){
+            return CommentResponse.builder()
+                    .message("댓글이 성공적으로 삭제되었습니다.").build();
+        }else {
+            throw new CommentException(CommonErrorCode.COMMENT_DELETE_FAILURE);
+        }
+
     }
 }
