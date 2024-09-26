@@ -3,6 +3,9 @@ package study.supercoding_1.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 import study.supercoding_1.dto.PostDto;
 
 import java.time.LocalDateTime;
@@ -14,6 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@DynamicInsert
 @Table(name = "Posts")
 public class Post extends BaseTimeEntity {
 
@@ -40,7 +44,8 @@ public class Post extends BaseTimeEntity {
     private User user;
 
     @Column(name = "like_count")
-    private Integer likeCount;
+    @ColumnDefault("0")
+    private Integer likeCount; // 기본값 0으로 설정
 
     @OneToMany(mappedBy = "post" , cascade = CascadeType.ALL)
     private List<Comment> comments;
