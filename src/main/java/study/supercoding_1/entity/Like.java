@@ -1,10 +1,7 @@
 package study.supercoding_1.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 @Entity
 @Getter
@@ -23,5 +20,11 @@ public class Like {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
     private Post post;
+
+    @Builder
+    public Like(User user, Post post) {
+        this.user = user;
+        this.post = post;
+    }
 
 }
