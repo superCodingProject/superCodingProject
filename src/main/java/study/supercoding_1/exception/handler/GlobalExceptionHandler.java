@@ -12,6 +12,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import study.supercoding_1.exception.errorcode.CommonErrorCode;
 import study.supercoding_1.exception.errorcode.ErrorCode;
 import study.supercoding_1.exception.exception.CommentException;
+import study.supercoding_1.exception.exception.PostException;
 import study.supercoding_1.exception.exception.ResourceNotFoundException;
 import study.supercoding_1.exception.exception.RestApiException;
 import study.supercoding_1.exception.response.ErrorResponse;
@@ -37,6 +38,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     // CommentException 처리
     @ExceptionHandler(CommentException.class)
     public ResponseEntity<Object> handleCommentException(CommentException e){
+        return handleExceptionInternal(e.getErrorCode());
+    }
+
+    // PostException 처리
+    @ExceptionHandler(PostException.class)
+    public ResponseEntity<Object> handlePostException(PostException e){
         return handleExceptionInternal(e.getErrorCode());
     }
 
