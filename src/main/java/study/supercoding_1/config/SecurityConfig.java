@@ -11,9 +11,13 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
 import study.supercoding_1.jwt.JwtFilter;
 import study.supercoding_1.jwt.JwtUtil;
 import study.supercoding_1.jwt.LoginFilter;
+
+import java.util.Arrays;
+import java.util.Collections;
 
 //config 등록
 @Configuration
@@ -41,6 +45,17 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
+        // CORS 설정
+        http.cors(corsCustomizer -> corsCustomizer.configurationSource(request -> {
+            CorsConfiguration configuration = new CorsConfiguration();
+            configuration.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
+            configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+            configuration.setAllowCredentials(true);
+            configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "Accept"));
+            configuration.setExposedHeaders(Arrays.asList("Set-Cookie", "Authorization"));
+            return configuration;
+        }));
 
         // session 방식에서는 session이 고정되기 때문에 csrf 방식을 방어해줘야 하지만 jwt방식은 무상태성 이기 때문에 방어하지 안아도 됨.
         http.csrf((auth) -> auth.disable());

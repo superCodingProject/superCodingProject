@@ -33,9 +33,9 @@ public class PostService {
         return postDtoList;
     }
 
-    public List<PostDto> findByEmail(String email) {
-        List<Post> posts = postRepository.findByUser_Email(email);
-        return posts.stream().map(Post::toDto).collect(Collectors.toList());
+    public List<PostDto> findByEmail(String author) {
+        List<Post> posts = postRepository.findByAuthor(author);
+        return posts.stream().map(Post::toDto).collect(Collectors.toList());  // Return a list of PostDto
     }
 
     public void update(int id, PostDto postDto) {
