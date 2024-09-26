@@ -6,9 +6,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import study.supercoding_1.dto.*;
 import study.supercoding_1.entity.Comment;
-import study.supercoding_1.entity.Posts;
+import study.supercoding_1.entity.Post;
 import study.supercoding_1.repository.CommentRepository;
-import study.supercoding_1.repository.PostsRepository;
+import study.supercoding_1.repository.PostRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,12 +18,12 @@ import java.util.Optional;
 public class CommentService {
 
     private final CommentRepository commentRepository;
-    private final PostsRepository postsRepository;
+    private final PostRepository postRepository;
 
     @Transactional
     public AddCommentResponse addComment(AddCommentRequest addCommentRequest){
 
-        Posts post = postsRepository.findById(addCommentRequest.getPostId())
+        Post post = postRepository.findById(addCommentRequest.getPostId())
                 .orElseThrow(()->new RuntimeException("server error"));
 
         Comment savedComment = commentRepository.save(Comment.createComment(addCommentRequest,post));
