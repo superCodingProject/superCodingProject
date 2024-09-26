@@ -40,6 +40,7 @@ public class Post extends BaseTimeEntity {
 
     public PostDto toDto() {
         return PostDto.builder()
+                .id(getId())
                 .title(getTitle()) // this 생략
                 .content(getContent())
                 .author(getAuthor())

@@ -33,8 +33,8 @@ public class PostService {
         return postDtoList;
     }
 
-    public List<PostDto> findByEmail(String email) {
-        List<Post> posts = postRepository.findByUser_Email(email);
+    public List<PostDto> findByEmail(String author) {
+        List<Post> posts = postRepository.findByAuthor(author);
         return posts.stream().map(Post::toDto).collect(Collectors.toList());
     }
 

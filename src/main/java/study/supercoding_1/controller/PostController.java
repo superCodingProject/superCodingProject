@@ -30,9 +30,9 @@ public class PostController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/posts/search/{email}")
-    public ResponseEntity<?> findByEmail(@PathVariable String email) {
-        List<PostDto> postDtos = postService.findByEmail(email);
+    @GetMapping("/posts/search")
+    public ResponseEntity<?> findByEmail(@RequestParam("author_email") String author) {
+        List<PostDto> postDtos = postService.findByEmail(author);
         return ResponseEntity.ok(postDtos);
     }
 
