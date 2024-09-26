@@ -14,6 +14,8 @@ import java.time.LocalDateTime;
 
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class PostDto {
 
     private int id;
@@ -25,8 +27,6 @@ public class PostDto {
     @JsonProperty("created_at")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd HH:mm:ss")
     private LocalDateTime createdAt;
-    // 필요한것만 골라서 사용하는 builder
-
 
     public Post toEntity() {
         return Post.builder()

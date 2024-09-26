@@ -16,7 +16,7 @@ public class PostController {
 
     private final PostService postService;
 
-    @PostMapping("/post")
+    @PostMapping("/posts")
     public ResponseEntity<?> postsave(@RequestBody PostDto postDto) {
         return ResponseEntity.ok(postService.postsave(postDto));
     }
