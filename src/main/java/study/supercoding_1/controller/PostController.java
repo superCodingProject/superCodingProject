@@ -8,6 +8,7 @@ import study.supercoding_1.dto.PostResponseDto;
 import study.supercoding_1.service.PostService;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -31,9 +32,10 @@ public class PostController {
     }
 
     @GetMapping("/posts/search")
-    public ResponseEntity<?> findByEmail(@RequestParam("author_email") String author) {
-        List<PostDto> postDtos = postService.findByEmail(author);
-        return ResponseEntity.ok(postDtos);
+    public ResponseEntity<PostResponseDto> findByEmail(@RequestParam("author_email") String author) {
+        List<PostDto> postDtos = postService.findByEmail(author);  // Directly get the list of PostDto
+        PostResponseDto response = new PostResponseDto(postDtos);  // Pass the list to PostResponseDto
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping("posts/{id}")
