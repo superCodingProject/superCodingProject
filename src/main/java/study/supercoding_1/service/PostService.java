@@ -6,9 +6,7 @@ import study.supercoding_1.dto.PostDto;
 import study.supercoding_1.entity.Post;
 import study.supercoding_1.repository.PostRepository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -18,9 +16,11 @@ public class PostService {
     private final PostRepository postRepository;
 
     public Object postsave(PostDto postDto) {
-        Post post = postDto.toEntity(postDto);
+        Post post = postDto.toEntity();
         postRepository.save(post);
-        return post;
+        Map<String, String > response = new HashMap<>();
+        response.put("message", "게시물이 성공적으로 작성되었습니다.");
+        return response;
     }
 
     public List<PostDto> findAll() {
