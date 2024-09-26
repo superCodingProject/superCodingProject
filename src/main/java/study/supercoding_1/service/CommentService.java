@@ -11,6 +11,7 @@ import study.supercoding_1.repository.CommentRepository;
 import study.supercoding_1.repository.PostsRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -22,16 +23,15 @@ public class CommentService {
     @Transactional
     public AddCommentResponse addComment(AddCommentRequest addCommentRequest){
 
-        Posts post = postsRepository.findById(addCommentRequest.getPost_id())
+        Posts post = postsRepository.findById(addCommentRequest.getPostId())
                 .orElseThrow(()->new RuntimeException("server error"));
 
-        Comment newComment = Comment.builder()
-                .content(addCommentRequest.getContent())
-                .author(addCommentRequest.getAuthor())
-                .post(post)
-                .build();
-        commentRepository.save(newComment);
-        return new AddCommentResponse("댓글이 성공적으로 작성되었습니다.");
+        Comment savedComment = commentRepository.save(Comment.createComment(addCommentRequest,post));
+        if (savedComment.getId() > 0){
+            return new AddCommentResponse("댓글이 성공적으로 작성되었습니다.");
+        }else {
+            throw new RuntimeException("댓글 작성에 실패했습니다.");
+        }
     }
 
     @Transactional
