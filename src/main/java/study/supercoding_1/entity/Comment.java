@@ -5,7 +5,6 @@ import lombok.*;
 import study.supercoding_1.dto.AddCommentRequest;
 import study.supercoding_1.dto.GetCommentResponse;
 import study.supercoding_1.dto.UpdateCommentRequest;
-import study.supercoding_1.dto.UpdateCommentResponse;
 
 @Entity
 @Table(name = "comments")
@@ -21,7 +20,7 @@ public class Comment extends BaseTimeEntity{
     private String author;
 
     @Builder
-    public Comment(String content, String author,Posts post) {
+    public Comment(String content, String author,Post post) {
         this.content = content;
         this.author = author;
         this.post = post;
@@ -37,7 +36,7 @@ public class Comment extends BaseTimeEntity{
 
     @ManyToOne
     @JoinColumn(name = "post_id")
-    private Posts post;
+    private Post post;
 
     public GetCommentResponse entityToGetCommentResponse(){
         return GetCommentResponse.builder()
@@ -48,7 +47,7 @@ public class Comment extends BaseTimeEntity{
                 .createdAt(this.getCreatedAt()).build();
     }
 
-    public static Comment createComment(AddCommentRequest request, Posts post){
+    public static Comment createComment(AddCommentRequest request, Post post){
         return Comment.builder()
                 .content(request.getContent())
                 .author(request.getAuthor())
