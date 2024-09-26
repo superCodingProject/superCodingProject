@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import study.supercoding_1.dto.PostDto;
+import study.supercoding_1.dto.PostResponseDto;
 import study.supercoding_1.service.PostService;
 
 import java.util.List;
@@ -21,9 +22,12 @@ public class PostController {
     }
 
     @GetMapping("/posts")
-    public ResponseEntity<?> findAll() {
+    public ResponseEntity<PostResponseDto> findAll() {
         List<PostDto> postDtoList = postService.findAll();
-        return ResponseEntity.ok(postDtoList);
+
+        PostResponseDto response = new PostResponseDto(postDtoList);
+
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/posts/search/{email}")
