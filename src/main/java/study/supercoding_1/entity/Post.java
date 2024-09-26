@@ -6,6 +6,7 @@ import lombok.*;
 import study.supercoding_1.dto.PostDto;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -37,6 +38,9 @@ public class Post extends BaseTimeEntity {
     @JoinColumn(name = "user_id")
     @JsonIgnore
     private User user;
+
+    @OneToMany(mappedBy = "post" , cascade = CascadeType.ALL)
+    private List<Comment> comments;
 
     public PostDto toDto() {
         return PostDto.builder()

@@ -33,8 +33,8 @@ public class PostController {
 
     @GetMapping("/posts/search")
     public ResponseEntity<PostResponseDto> findByEmail(@RequestParam("author_email") String author) {
-        List<PostDto> postDtos = postService.findByEmail(author);  // Directly get the list of PostDto
-        PostResponseDto response = new PostResponseDto(postDtos);  // Pass the list to PostResponseDto
+        List<PostDto> postDtos = postService.findByEmail(author);
+        PostResponseDto response = new PostResponseDto(postDtos);
         return ResponseEntity.ok(response);
     }
 
