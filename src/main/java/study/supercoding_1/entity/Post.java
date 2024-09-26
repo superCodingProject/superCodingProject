@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import study.supercoding_1.dto.PostDto;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Getter
 @Setter
@@ -27,6 +29,10 @@ public class Post extends BaseTimeEntity {
     @Column(length = 50)
     private String author;
 
+    public LocalDateTime getCreateAt() {
+        return super.getCreatedAt();
+    }
+
     @ManyToOne(fetch = FetchType.LAZY) //  many 쪽이 다 관계
     @JoinColumn(name = "user_id")
     @JsonIgnore
@@ -37,6 +43,7 @@ public class Post extends BaseTimeEntity {
                 .title(getTitle()) // this 생략
                 .content(getContent())
                 .author(getAuthor())
+                .createdAt(getCreatedAt())
                 .build();
     }
 
