@@ -49,7 +49,7 @@ public class UserService {
         //user.setCreate_at();
 
         userRepository.save(user);
-        map.put("message","로그인이 성공적으로 완료되었습니다.");
+        map.put("message","회원가입이 성공적으로 완료되었습니다.");
         return map;
     }
 
